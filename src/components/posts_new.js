@@ -11,15 +11,19 @@ class PostsNew extends Component {
                     {...field.input}// get all properties of field object and spread them in this input
 
                 />
+                {field.meta.touched ? field.meta.error : ""}
             </div>
         );
     }
-
-
-
+    onSubmit(values) {
+        console.log(values);
+    }
     render() {
+
+        const { handleSubmit } = this.porps;
+        console.log("HANDLE+>", this.porps.handleSubmit);
         return (
-            <form>
+            <form onSubmit={handleSubmitfuck(this.onSubmit.bind(this))} >
                 <Field
                     label="Title"
                     name="title"
@@ -35,6 +39,7 @@ class PostsNew extends Component {
                     name="content"
                     component={this.renderField}
                 />
+                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         );
     }
