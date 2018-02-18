@@ -23,7 +23,7 @@ class PostsNew extends Component {
         const { handleSubmit } = this.porps;
         console.log("HANDLE+>", this.porps.handleSubmit);
         return (
-            <form onSubmit={handleSubmitfuck(this.onSubmit.bind(this))} >
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
                 <Field
                     label="Title"
                     name="title"
