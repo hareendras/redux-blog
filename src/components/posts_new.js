@@ -8,7 +8,8 @@ class PostsNew extends Component {
                 <label>{field.label}</label>
                 <input className="form-control"
                     type="text"
-                    {...field.input}
+                    {...field.input}// get all properties of field object and spread them in this input
+
                 />
             </div>
         );
@@ -25,8 +26,8 @@ class PostsNew extends Component {
                     component={this.renderField}
                 />
                 <Field
-                    label="Tags"
-                    name="tags"
+                    label="Categories"
+                    name="categories"
                     component={this.renderField}
                 />
                 <Field
@@ -39,6 +40,20 @@ class PostsNew extends Component {
     }
 }
 
+function validate(values) {
+    const errors = {};
+    if (!values.title) {
+        errors.title = "Enter a Title";
+    }
+    if (!values.categories) {
+        errors.categories = "Enter a Category";
+    }
+    if (!values.content) {
+        errors.content = "Enter Content";
+    }
+}
+
 export default reduxForm({
+    validate, // es 6; same as validate: validate
     form: 'PostsNewForm'
 })(PostsNew);
