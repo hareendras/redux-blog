@@ -19,9 +19,11 @@ class PostsNew extends Component {
         console.log(values);
     }
     render() {
-
-        const { handleSubmit } = this.porps;
-        console.log("HANDLE+>", this.porps.handleSubmit);
+        console.log(this.props);
+        if (typeof this.props.handleSubmit == 'undefined')
+            return <div>props null</div>
+        const { handleSubmit } = this.props;
+        
         return (
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
                 <Field
