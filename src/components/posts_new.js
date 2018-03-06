@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { createPost } from "../actions";
 
 class PostsNew extends Component {
   renderField(field) {
     // filed is passed by Redux form
     // console.log("FIELD", field);
+    const { meta } = field;
+    const className = `form-group ${
+      meta.touched && field.meta.error ? "has-danger" : ""
+    }`;
     return (
-      <div className="form-group">
+      <div className={className}>
         <label>{field.label}</label>
         <input
           className="form-control"
@@ -14,14 +21,17 @@ class PostsNew extends Component {
           {...field.input} // get all properties of field.input object and spread them as properties in this input
           //onChange={filed.input.onChange} etc
         />
-        {field.meta.touched
-          ? field.meta.error
-          : "" /*field.meta.error will contain the error we set in validate function*/}
+
+        <div className="text-help">
+          {meta.touched
+            ? meta.error
+            : "" /*field.meta.error will contain the error we set in validate function*/}
+        </div>
       </div>
     );
   }
   onSubmit(values) {
-    console.log(values);
+    this.props.createPost(values);
   }
   render() {
     console.log(this.props);
@@ -51,6 +61,9 @@ class PostsNew extends Component {
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
+        <Link to="/" className="btn btn-danger">
+          Cancel
+        </Link>
       </form>
     );
   }
@@ -67,9 +80,10 @@ function validate(values) {
   if (!values.content) {
     errors.content = "Enter Content";
   }
+  return errors;
 }
 
 export default reduxForm({
   validate, // es 6; same as validate: validate
   form: "PostsNewForm" // name of the Form
-})(PostsNew); //reduxForm is like Connect helper
+})(connect(null, { createPost })(PostsNew)); //reduxForm is like Connect helper
