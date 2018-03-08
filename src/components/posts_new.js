@@ -31,7 +31,9 @@ class PostsNew extends Component {
     );
   }
   onSubmit(values) {
-    this.props.createPost(values);
+    this.props.createPost(values, () => {
+      this.props.history.push("/"); // This function is passed as a callback. This will be called when the request is made from action
+    });
   }
   render() {
     console.log(this.props);
